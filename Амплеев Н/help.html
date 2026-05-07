@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Помощь - FinControl Bot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f2f5;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #666;
+            transition: 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        
+        .main {
+            padding: 40px 0;
+        }
+        
+        .page-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        
+        .help-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .help-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .command-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .command-item {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .command-code {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-family: monospace;
+        }
+        
+        .example-box {
+            background: #1e1e2e;
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+        
+        .faq-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="nav">
+            <a href="index.html" class="logo">FinControl Bot</a>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="chat.html">Чат с ботом</a>
+                <a href="dashboard.html">Статистика</a>
+                <a href="settings.html">Настройки</a>
+                <a href="help.html">Помощь</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="main">
+    <div class="container">
+        <h1 class="page-title">Помощь и поддержка</h1>
+        
+        <div class="help-card">
+            <h3>📋 Быстрые команды</h3>
+            <div class="command-list">
+                <div class="command-item">
+                    <span class="command-code">/start</span>
+                    <span>Запуск бота</span>
+                </div>
+                <div class="command-item">
+                    <span class="command-code">/help</span>
+                    <span>Справка</span>
+                </div>
+                <div class="command-item">
+                    <span class="command-code">/report</span>
+                    <span>Отчет за месяц</span>
+                </div>
+                <div class="command-item">
+                    <span class="command-code">помощь</span>
+                    <span>Показать помощь</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="help-card">
+            <h3>💰 Примеры сообщений</h3>
+            <div class="example-box">
+                500 обед<br>
+                300 кофе карта<br>
+                2000 такси наличные<br>
+                зарплата 100000<br>
+                доход 15000
+            </div>
+        </div>
+        
+        <div class="help-card">
+            <h3>❓ Частые вопросы</h3>
+            <div class="faq-item">
+                <div class="faq-question">Как начать пользоваться?</div>
+                <div>Просто отправьте боту "500 обед" - бот сам все запомнит и посчитает.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Как добавить доход?</div>
+                <div>Напишите "зарплата 50000" или "доход 10000". Бот автоматически распознает.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Безопасны ли мои данные?</div>
+                <div>Да, все данные хранятся локально в вашем браузере и не передаются третьим лицам.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Сколько стоит бот?</div>
+                <div>Бот полностью бесплатный! Все функции доступны без ограничений.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Как посмотреть статистику?</div>
+                <div>Перейдите на страницу "Статистика" в меню или отправьте команду /report в чате.</div>
+            </div>
+        </div>
+        
+        <div class="help-card">
+            <h3>📞 Контакты поддержки</h3>
+            <p>Telegram: @FinControlSupport</p>
+            <p>Email: support@fincontrol.ru</p>
+            <p style="margin-top: 15px;">Мы отвечаем в течение 24 часов!</p>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>FinControl Bot — ваш финансовый помощник в Telegram</p>
+        <p style="margin-top: 20px;">
+            <a href="index.html">Главная</a> | 
+            <a href="chat.html">Чат с ботом</a> |
+            <a href="dashboard.html">Статистика</a> |
+            <a href="settings.html">Настройки</a> |
+            <a href="help.html">Помощь</a>
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinControl Bot - Управляй финансами в Telegram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #666;
+            transition: 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            margin-top: 70px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        
+        .btn-light {
+            background: white;
+            color: #667eea;
+        }
+        
+        .btn-light:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-outline {
+            border: 2px solid white;
+            color: white;
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: #667eea;
+        }
+        
+        .section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .card h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        .card p {
+            color: #666;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .step {
+            padding: 20px;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #667eea;
+            color: white;
+            border
+
+
+dius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .stats {
+            background: #f8f9fa;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+            padding: 40px;
+            border-radius: 15px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            margin-bottom: 30px;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        max-width: 768px {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 15px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="nav">
+            <a href="index.html" class="logo">FinControl Bot</a>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="chat.html">Чат с ботом</a>
+                <a href="dashboard.html">Статистика</a>
+                <a href="settings.html">Настройки</a>
+                <a href="help.html">Помощь</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h1>Управляй финансами легко</h1>
+        <p>Просто пиши боту о своих тратах, а он всё сам посчитает</p>
+        <div>
+            <a href="chat.html" class="btn btn-light">Начать в Telegram</a>
+            <a href="#features" class="btn btn-outline">Узнать больше</a>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="section">
+    <div class="container">
+        <h2 class="section-title">Что умеет бот</h2>
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">Расходы</div>
+                <h3>Учет расходов</h3>
+                <p>Просто пишите "500 обед" или "300 кофе" - бот всё запомнит</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">Доходы</div>
+                <h3>Доходы</h3>
+                <p>"зарплата 50000" - доходы тоже под контролем</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">AI</div>
+                <h3>Автоматическая категоризация</h3>
+                <p>Бот сам понимает, куда потратили деньги</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">Отчеты</div>
+                <h3>Отчеты и графики</h3>
+                <p>Команда report покажет всю статистику</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">Бюджет</div>
+                <h3>Бюджеты</h3>
+                <p>Устанавливайте лимиты и не тратьте лишнего</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">Безопасность</div>
+                <h3>Ваши данные</h3>
+                <p>Вся информация хранится только у вас</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="how-it-works" class="section" style="background: #f8f9fa;">
+    <div class="container">
+        <h2 class="section-title">Как это работает</h2>
+        <div class="steps">
+            <div class=
+
+
+"step">
+                <div class="step-number">1</div>
+                <h3>Напишите боту</h3>
+                <p>Отправьте сообщение: "500 обед"</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Бот запомнит</h3>
+                <p>Автоматически определит категорию</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Получите отчет</h3>
+                <p>Команда report покажет статистику</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="stats" class="section">
+    <div class="container">
+        <h2 class="section-title">Цифры и факты</h2>
+        <div class="stats">
+            <div>
+                <div class="stat-number">68%</div>
+                <p>людей не ведут учет финансов</p>
+            </div>
+            <div>
+                <div class="stat-number">5 сек</div>
+                <p>на одну операцию</p>
+            </div>
+            <div>
+                <div class="stat-number">24/7</div>
+                <p>бота всегда с вами</p>
+            </div>
+            <div>
+                <div class="stat-number">100%</div>
+                <p>бесплатно</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <h2>Готовы начать?</h2>
+        <p>Присоединяйтесь к тысячам пользователей, которые уже управляют своими финансами</p>
+        <a href="chat.html" class="btn btn-light" style="background: white; color: #667eea;">Перейти в Telegram</a>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p>FinControl Bot — ваш финансовый помощник в Telegram</p>
+        <p style="margin-top: 20px;">
+            <a href="index.html">Главная</a> | 
+            <a href="chat.html">Чат с ботом</a> |
+            <a href="dashboard.html">Статистика</a> |
+            <a href="settings.html">Настройки</a> |
+            <a href="help.html">Помощь</a>
+        </p>
+        <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.7;">
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

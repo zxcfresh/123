@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чат с FinControl Bot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f2f5;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #666;
+            transition: 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        
+        .telegram-link {
+            background: #0088cc;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .telegram-link:hover {
+            background: #006699;
+        }
+        
+        .quick-buttons {
+            display: flex;
+            gap: 10px;
+            padding: 10px 20px;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .quick-btn {
+            background: #667eea20;
+            color: #667eea;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        
+        .quick-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #e8f0fe;
+        }
+        
+        .message {
+            max-width: 75%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+        
+        .user-message {
+            background: #667eea;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .bot-message {
+            background: white;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .input-area {
+            background: white;
+            padding: 15px 20px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .input-area input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .input-area input:focus {
+            border-color: #667eea;
+        }
+        
+        .input-area button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .input-area button:hover {
+            background: #5a67d8;
+        }
+        
+        .qr-section {
+            background: white;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .message {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="nav">
+            <a href="index.html" class="logo">FinControl Bot</a>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="chat.html">Чат с ботом</a>
+                <a href="dashboard.html">Статистика</a>
+                <a href="settings.html">Настройки</a>
+                <a href="help.html">Помощь</a>
+            </div>
+            <a href="https://t.me/YourBotUsername" class="telegram-link" target="_blank">Открыть в Telegram</a>
+        </div>
+    </div>
+</header>
+
+<div class="quick-buttons">
+    <button class="quick-btn" onclick="quickCommand('500 обед')">500 обед</button>
+    <button class="quick-btn" onclick="quickCommand('300 кофе')">300 кофе</button>
+    <button class="quick-btn" onclick="quickCommand('1000 такси')">1000 такси</button>
+    <button class="quick-btn" onclick="quickCommand('зарплата 50000')">зарплата 50000</button>
+    <button class="quick-btn" onclick="quickCommand('/report')"> Отчет</button>
+    <button class="quick-btn" onclick="quickCommand('помощь')"> Помощь</button>
+</div>
+
+<div class="chat-container" id="chatContainer">
+    <div class="message bot-message">
+         Привет! Я бот для учета финансов.<br><br>
+         Напиши мне в формате:<br>
+        "500 обед" - расход<br>
+        "300 кофе карта" - расход с карты<br>
+        "зарплата 100000" - доход<br><br>
+         Команды:<br>
+        /report - отчет за месяц<br>
+        /help - справка<br><br>
+         Нажми на кнопки выше для быстрого ввода!
+    </div>
+</div>
+
+<div class="input-area">
+    <input type="text" id="messageInput" placeholder="Введите сообщение...">
+    <button onclick="sendMessage()">Отправить</button>
+</div>
+
+<div class="qr-section">
+    <div>📱 Или перейдите в Telegram</div>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://t.me/YourBotUsername" alt="QR Code">
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>FinControl Bot — ваш финансовый помощник в Telegram</p>
+        <p style="margin-top: 10px;">
+            <a href="index.html">Главная</a> | 
+            <a href="chat.html">Чат с ботом</a> |
+            <a href="dashboard.html">Статистика</a> |
+            <a href="settings.html">Настройки</a> |
+            <a href="help.html">Помощь</a>
+        </p>
+    </div>
+</footer>
+
+<script>
+    const chatContainer = document.getElementById('chatContainer');
+    const messageInput = document.getElementById('messageInput');
+    
+    let balance = 0;
+    let transactions = [];
+    let categories = {
+        'еда': 0,
+        'транспорт': 0,
+        'развлечения': 0,
+        'прочее': 0
+    };
+    
+    function addMessage(text, isUser = true) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message ' + (isUser ? 'user-message' : 'bot-message');
+        messageDiv.textContent = text;
+        chatContainer.appendChild(messageDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    
+    function parseCommand(text) {
+        text = text.trim().toLowerCase();
+        
+        if (text === '/report') {
+            generateReport();
+            return true;
+        }
+        
+        if (text === '/help') {
+            showHelp();
+            return true;
+        }
+        
+        if (text === 'помощь') {
+            showHelp();
+            return true;
+        }
+        
+        if (text.includes('зарплата') || text.includes('доход')) {
+            let amount = parseFloat(text.match(/\d+/)[0]);
+            if (!isNaN(amount)) {
+                balance += amount;
+                addTransaction(amount, 'зарплата', 'income');
+                addMessage(`💰 Записано: +${amount} руб. (Доход)\n💰 Баланс: ${balance} руб.`, false);
+            }
+            return true;
+        }
+        
+        let numbers = text.match(/\d+/);
+        if (numbers) {
+            let amount = parseFloat(numbers[0]);
+            let description = text.replace(/\d+/g, '').trim();
+            
+            let category = 'прочее';
+            if (description.includes('обед') || description.includes('еда') || description.includes('кофе') || description.includes('ресторан')) {
+                category = 'еда';
+            } else if (description.includes('такси') || description.includes('метро') || description.includes('бензин')) {
+                category = 'транспорт';
+            } else if (description.includes('кино') || description.includes('игры') || description.includes('бар')) {
+                category = 'развлечения';
+            }
+            
+            let paymentMethod = 'наличные';
+            if (description.includes('карта')) {
+                paymentMethod = 'карта';
+            }
+            
+            balance -= amount;
+            categories[category] = (categories[category] || 0) + amount;
+            addTransaction(amount, description, 'expense', category, paymentMethod);
+            
+            addMessage(` Записано: -${amount} руб. (${category})\n💰 Баланс: ${balance} руб.`, false);
+            return true;
+        }
+        
+        return false;
+    }
+    
+    function addTransaction(amount, description, type, category, paymentMethod = 'наличные') {
+        transactions.unshift({
+            amount: amount,
+            description: description,
+            type: type,
+            category: category,
+            paymentMethod: paymentMethod,
+            date: new Date().toLocaleString()
+        });
+        
+        localStorage.setItem('transactions', JSON.stringify(transactions));
+        localStorage.setItem('balance', balance);
+        localStorage.setItem('categories', JSON.stringify(categories));
+    }
+    
+    function loadData() {
+        let saved = localStorage.getItem('transactions');
+        if (saved) {
+            transactions = JSON.parse(saved);
+        }
+        
+        let savedBalance = localStorage.getItem('balance');
+        if (savedBalance !== null) {
+            balance = parseFloat(savedBalance);
+        }
+        
+        let savedCategories = localStorage.getItem('categories');
+        if (savedCategories) {
+            categories = JSON.parse(savedCategories);
+        }
+    }
+    
+    function generateReport() {
+        let totalIncome = 0;
+        let totalExpense = 0;
+        
+        transactions.forEach(t => {
+            if (t.type === 'income') {
+                totalIncome += t.amount;
+            } else {
+                totalExpense += t.amount;
+            }
+        });
+        
+        let report = ` ФИНАНСОВЫЙ ОТЧЕТ \n\n`;
+        report += ` Доходы: ${totalIncome} руб.\n`;
+        report += ` Расходы: ${totalExpense} руб.\n`;
+        report += ` Баланс: ${balance} руб.\n\n`;
+        
+        report += `📋 РАСХОДЫ ПО КАТЕГОРИЯМ:\n`;
+        for (let cat in categories) {
+            if (categories[cat] > 0) {
+                report += `   • ${cat}: ${categories[cat]} руб.\n`;
+            }
+        }
+        
+        report += `\n🕒 ПОСЛЕДНИЕ ОПЕРАЦИИ:\n`;
+        for (let i = 0; i < Math.min(transactions.length, 5); i++) {
+            let t = transactions[i];
+            let sign = t.type === 'income' ? '+' : '-';
+            report += `   • ${sign}${t.amount} руб. - ${t.description}\n`;
+        }
+        
+        addMessage(report, false);
+    }
+    
+    function showHelp() {
+        let help = `📖 СПРАВКА 📖\n\n`;
+        help += ` Доходы:\n`;
+        help += `   • зарплата 50000\n`;
+        help += `   • доход 10000\n\n`;
+        help += ` Расходы:\n`;
+        help += `   • 500 обед\n`;
+        help += `   • 300 кофе карта\n`;
+        help += `   • 2000 такси\n\n`;
+        help += ` Команды:\n`;
+        help += `   • /report - отчет\n`;
+        help += `   • /help - помощь\n\n`;
+        help += ` Бот сам определяет категории!`;
+        
+        addMessage(help, false);
+    }
+    
+    function sendMessage() {
+        const message = messageInput.value.trim();
+        if (!message) return;
+        
+        addMessage(message, true);
+        messageInput.value = '';
+        
+        let handled = parseCommand(message);
+        if (!handled) {
+            addMessage(' Не могу понять. Пример: "500 обед" или "зарплата 50000"', false);
+        }
+        
+        updateDashboardData();
+    }
+    
+    function quickCommand(cmd) {
+        messageInput.value = cmd;
+        sendMessage();
+    }
+    
+    function updateDashboardData() {
+        localStorage.setItem('dashboard_balance', balance);
+        localStorage.setItem('dashboard_categories', JSON.stringify(categories));
+        localStorage.setItem('dashboard_transactions', JSON.stringify(transactions));
+    }
+    
+    messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+    
+    loadData();
+</script>
+
+</body>
+</html>

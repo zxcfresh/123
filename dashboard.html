@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистика - FinControl Bot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f2f5;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #666;
+            transition: 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        
+        .main {
+            padding: 40px 0;
+        }
+        
+        .welcome-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-card h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .chart-card h3 {
+            margin-bottom: 20px;
+        }
+        
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            width: 0%;
+        }
+        
+        .transactions {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .expense {
+            color: #ef4444;
+        }
+        
+        .income {
+            color: #10b981;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        
+        .btn-outline {
+            border: 1px solid #667eea;
+            color: #667eea;
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="nav">
+            <a href="index.html" class="logo">FinControl Bot</a>
+            <div class="nav-links">
+                <a href="index.html">Главная</a>
+                <a href="chat.html">Чат с ботом</a>
+                <a href="dashboard.html">Статистика</a>
+                <a href="settings.html">Настройки</a>
+                <a href="help.html">Помощь</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="main">
+    <div class="container">
+        <div class="welcome-card">
+            <h1>Добро пожаловать!</h1>
+            <p>Вот сводка ваших финансов за последний месяц</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Доходы</h3>
+                <div class="stat-value" id="totalIncome">0 ₽</div>
+            </div>
+            <div class="stat-card">
+                <h3>Расходы</h3>
+                <div class="stat-value" id="totalExpense">0 ₽</div>
+            </div>
+            <div class="stat-card">
+                <h3>Баланс</h3>
+                <div class="stat-value" id="balance">0 ₽</div>
+            </div>
+            <div class="stat-card">
+                <h3>Всего операций</h3>
+                <div class="stat-value" id="totalCount">0</div>
+            </div>
+        </div>
+        
+        <div class="charts-section">
+            <div class="chart-card">
+                <h3>Расходы по категориям</h3>
+                <div id="categoriesList"></div>
+            </div>
+            
+            <div class="chart-card">
+                <h3>Статистика</h3>
+                <div id="statsInfo"></div>
+            </div>
+        </div>
+        
+        <div class="transactions">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>Последние операции</h3>
+                <a href="chat.html" class="btn btn-outline">Добавить операцию</a>
+            </div>
+            <div id="transactionsList"></div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>FinControl Bot — ваш финансовый помощник в Telegram</p>
+        <p style="margin-top: 20px;">
+            <a href="index.html">Главная</a> | 
+            <a href="chat.html">Чат с ботом</a> |
+            <a href="dashboard.html">Статистика</a> |
+            <a href="settings.html">Настройки</a> |
+            <a href="help.html">Помощь</a>
+        </p>
+    </div>
+</footer>
+
+<script>
+    function loadData() {
+        let transactions = [];
+        let saved = localStorage.getItem('transactions');
+        if (saved) {
+            transactions = JSON.parse(saved);
+        }
+        
+        let totalIncome = 0;
+        let totalExpense = 0;
+        let categories = {};
+        
+        transactions.forEach(t => {
+            if (t.type === 'income') {
+                totalIncome += t.amount;
+            } else {
+                totalExpense += t.amount;
+                let cat = t.category || 'прочее';
+                categories[cat] = (categories[cat] || 0) + t.amount;
+            }
+        });
+        
+        let balance = totalIncome - totalExpense;
+        
+        document.getElementById('totalIncome').innerHTML = totalIncome.toFixed(0) + ' ₽';
+        document.getElementById('totalExpense').innerHTML = totalExpense.toFixed(0) + ' ₽';
+        document.getElementById('balance').innerHTML = balance.toFixed(0) + ' ₽';
+        document.getElementById('totalCount').innerHTML = transactions.length;
+        
+        let categoriesHtml = '';
+        let totalCategories = 0;
+        for (let cat in categories) {
+            totalCategories += categories[cat];
+        }
+        
+        for (let cat in categories) {
+            let percent = totalCategories > 0 ? (categories[cat] / totalCategories * 100).toFixed(0) : 0;
+            categoriesHtml += `
+                <div class="category-item">
+                    <span>${cat}</span>
+                    <span>${categories[cat].toFixed(0)} ₽ (${percent}%)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${percent}%"></div>
+                </div>
+            `;
+        }
+        
+        if (Object.keys(categories).length === 0) {
+            categoriesHtml = '<p style="text-align: center; color: #999;">Нет данных о расходах</p>';
+        }
+        document.getElementById('categoriesList').innerHTML = categoriesHtml;
+        
+        let statsHtml = `
+            <div style="text-align: center;">
+                <p style="font-size: 3rem;">💰</p>
+                <p>Средний расход в день: ${(totalExpense / 30).toFixed(0)} ₽</p>
+                <p style="margin-top: 20px;">📊 Всего операций: ${transactions.length}</p>
+                <p>💰 Доходов: ${transactions.filter(t => t.type === 'income').length}</p>
+                <p>💸 Расходов: ${transactions.filter(t => t.type === 'expense').length}</p>
+            </div>
+        `;
+        document.getElementById('statsInfo').innerHTML = statsHtml;
+        
+        let transactionsHtml = '';
+        for (let i = 0; i < Math.min(transactions.length, 10); i++) {
+            let t = transactions[i];
+            let sign = t.type === 'income' ? '+' : '-';
+            let colorClass = t.type === 'income' ? 'income' : 'expense';
+            let signText = t.type === 'income' ? `+${t.amount} ₽` : `-${t.amount} ₽`;
+            transactionsHtml += `
+                <div class="transaction-item">
+                    <span>${t.description || 'Операция'}</span>
+                    <span class="${colorClass}">${signText}</span>
+                </div>
+            `;
+        }
+        
+        if (transactions.length === 0) {
+            transactionsHtml = '<p style="text-align: center; color: #999;">Нет операций. Начните учет в чате с ботом!</p>';
+        }
+        document.getElementById('transactionsList').innerHTML = transactionsHtml;
+    }
+    
+    loadData();
+    
+    window.addEventListener('storage', function() {
+        loadData();
+    });
+</script>
+
+</body>
+</html>
